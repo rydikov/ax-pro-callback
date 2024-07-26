@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./src:/app/src
+    ports:
+      - 8808:8808
+    command: gunicorn src.app --bind 0.0.0.0:8808 --reload
+    
