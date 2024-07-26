@@ -1,7 +1,25 @@
+import os
 import falcon
+
 from falcon.http_status import HTTPStatus
 
 from .receiver import DisarmResource
+
+
+class AuthMiddleware:
+    def process_request(self, req, resp):
+        token = req.get_header('Authorization')
+
+        if token is None:
+            description = 'Please provide an auth token as part of the request.'
+            raise falcon.HTTPUnauthorized('Auth token required', description)
+
+        if not self._token_is_valid(token):
+            description = 'The provided auth token is not valid. Please request a new token and try again.'
+            raise falcon.HTTPUnauthorized('Authentication required', description)
+
+    def _token_is_valid(self, token):
+        return token == os.environ.get('SECRET_TOKEN')
 
 
 class HandleCORS(object):
@@ -14,7 +32,7 @@ class HandleCORS(object):
             raise HTTPStatus(falcon.HTTP_200, body='\n')
 
 
-app = application = falcon.App(middleware=[HandleCORS() ])
+app = application = falcon.App(middleware=[HandleCORS(), AuthMiddleware()])
 
 disarm = DisarmResource()
 
