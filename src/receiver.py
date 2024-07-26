@@ -19,7 +19,7 @@ axpro = AxPro(
 
 class DisarmResource:
     def on_post(self, req, resp):
-        resp = axpro.disarm()
-        answer = 'OK' if resp['statusCode'] == 1 else resp['errorMsg']
+        ax_resp = axpro.disarm()
+        answer = 'OK' if ax_resp['statusCode'] == 1 else ax_resp['errorMsg']
         resp.text = json.dumps({'status': answer})
         resp.status = falcon.HTTP_200

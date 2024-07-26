@@ -12,11 +12,11 @@ class AuthMiddleware:
 
         if token is None:
             description = 'Please provide an auth token as part of the request.'
-            raise falcon.HTTPUnauthorized('Auth token required', description)
+            raise falcon.HTTPUnauthorized(title='Auth token required', description=description)
 
         if not self._token_is_valid(token):
             description = 'The provided auth token is not valid. Please request a new token and try again.'
-            raise falcon.HTTPUnauthorized('Authentication required', description)
+            raise falcon.HTTPUnauthorized(title='Authentication required', description=description)
 
     def _token_is_valid(self, token):
         return token == os.environ.get('SECRET_TOKEN')
