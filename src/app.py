@@ -3,7 +3,7 @@ import falcon
 
 from falcon.http_status import HTTPStatus
 
-from .receiver import DisarmResource
+from .receiver import DisarmResource, ArmResource
 
 
 class AuthMiddleware:
@@ -35,5 +35,7 @@ class HandleCORS(object):
 app = application = falcon.App(middleware=[HandleCORS(), AuthMiddleware()])
 
 disarm = DisarmResource()
+arm = ArmResource()
 
 app.add_route('/disarm', disarm)
+app.add_route('/arm', arm)
