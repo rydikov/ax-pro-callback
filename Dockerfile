@@ -4,7 +4,7 @@ ENV PYTHONDONTWRITEBYTECODE yes
 
 RUN apt-get update
 RUN apt-get install -y git
-RUN pip install -e git+https://github.com/rydikov/ax-pro.git@b2349f6b994f6be94ecaf7e435aed877abf4b812#egg=axpro
+RUN pip install -e git+https://github.com/rydikov/ax-pro.git@eef9b3f335e99b59de67c8509ae9b369231206ce#egg=axpro
 
 WORKDIR /app
 
